@@ -52,11 +52,12 @@ public class RegistrerPageActivity extends AppCompatActivity{
                     email = Objects.requireNonNull(mEmail.getText()).toString();
                     password = Objects.requireNonNull(mPassword.getText()).toString();
                     RegisterEmailAndPassword();
-                    Intent lvIntent = new Intent(RegistrerPageActivity.this, MainActivity.class);
-                    startActivity(lvIntent);
-
                 }
             });
+
+            /**
+             * Go to LogIn
+             */
 
             goToLogIn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -67,12 +68,18 @@ public class RegistrerPageActivity extends AppCompatActivity{
             });
         }
 
-        public void RegisterEmailAndPassword(){
+
+    /** Les Class ne
+     *
+     */
+    public void RegisterEmailAndPassword(){
             mFirebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
                         FirebaseUser user = mFirebaseAuth.getCurrentUser();
+                        Intent lvIntent = new Intent(RegistrerPageActivity.this, MainActivity.class);
+                        startActivity(lvIntent);
                     }else {
                         Toast.makeText(RegistrerPageActivity.this, "Authentication failed.",
                                 Toast.LENGTH_SHORT).show();

@@ -53,9 +53,6 @@ public class LogInPageActivity extends AppCompatActivity {
                 password = Objects.requireNonNull(mPassword.getText()).toString();
 
                 logInWithEmailAndPassword();
-                Intent lvIntent = new Intent(LogInPageActivity.this, MainActivity.class);
-                startActivity(lvIntent);
-
             }
         });
 
@@ -77,6 +74,8 @@ public class LogInPageActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mFirebaseAuth.getCurrentUser();
+                            Intent lvIntent = new Intent(LogInPageActivity.this, MainActivity.class);
+                            startActivity(lvIntent);
 
                         } else {
                             // If sign in fails, display a message to the user.
