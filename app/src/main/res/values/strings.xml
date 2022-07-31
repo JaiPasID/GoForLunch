@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">GoForLunch</string>
+    <string name="go_4_lunch">Go 4 Lunch</string>
+    <string name="pour_cr_er_un_compte">Pour créer un compte \u0020</string>
+    <string name="cliquer_ici">cliquer ici</string>
+    <string name="login">LogIn</string>
+    <string name="password">Password</string>
+    <string name="email">email</string>
+    <string name="connexion">CONNEXION</string>
+    <string name="vous_avez_d_j_un_compte">Vous avez déjà un compte \u0020</string>
+    <string name="cr_er_votre_compte">Créer votre compte</string>
+    <string name="create_account">Create Account</string>
+    <string name="sign_out">Sign Out</string>
+</resources>
