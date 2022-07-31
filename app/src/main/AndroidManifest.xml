@@ -14,10 +14,10 @@
         android:theme="@style/Theme.GoForLunch"
         tools:targetApi="31">
         <activity
-            android:name=".LogInPageActivity"
+            android:name=".activity.Authentification.LogInPageActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterPageActivity"
+            android:name=".activity.Authentification.RegistrerPageActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

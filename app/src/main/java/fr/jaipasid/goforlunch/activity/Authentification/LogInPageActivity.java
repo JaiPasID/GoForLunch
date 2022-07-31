@@ -1,4 +1,4 @@
-package fr.jaipasid.goforlunch;
+package fr.jaipasid.goforlunch.activity.Authentification;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +18,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Objects;
+
+import fr.jaipasid.goforlunch.MainActivity;
+import fr.jaipasid.goforlunch.R;
 
 public class LogInPageActivity extends AppCompatActivity {
 
@@ -59,7 +62,7 @@ public class LogInPageActivity extends AppCompatActivity {
         goToCreateAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent lvIntent = new Intent(LogInPageActivity.this, RegisterPageActivity.class);
+                Intent lvIntent = new Intent(LogInPageActivity.this, RegistrerPageActivity.class);
                 startActivity(lvIntent);
             }
         });
@@ -85,4 +88,6 @@ public class LogInPageActivity extends AppCompatActivity {
                     }
                 });
     }
+
+
 }
