@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GoForLunch</string>
+    <string name="app_name"></string>
     <string name="go_4_lunch">Go 4 Lunch</string>
     <string name="pour_cr_er_un_compte">Pour créer un compte \u0020</string>
     <string name="cliquer_ici">cliquer ici</string>
@@ -11,4 +11,6 @@
     <string name="cr_er_votre_compte">Créer votre compte</string>
     <string name="create_account">Create Account</string>
     <string name="sign_out">Sign Out</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
