@@ -6,7 +6,7 @@ import retrofit2.http.GET;
 public class Retrofit {
 
     private static retrofit2.Retrofit retrofit;
-    private static String BASE_URL = "https://qrcode-monkey.p.rapidapi.com/qr/custom";
+    private static String BASE_URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json";
 
 
 

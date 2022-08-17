@@ -1,6 +1,7 @@
 package fr.jaipasid.goforlunch;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -11,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 
@@ -43,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         chooseFragment(new MapFragment());
+        binding.toolBar.setTitle("I'm Hungry !");
+
 
 
         mToolbar = findViewById(R.id.toolBar);
@@ -51,22 +55,29 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseAuth = FirebaseAuth.getInstance();
         currentUser = mFirebaseAuth.getCurrentUser();
 
-       //setSupportActionBar(mToolbar);
-       //getActionBar().setTitle("I'm Hungry !");
+       setSupportActionBar(mToolbar);
 
 
+
+
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, binding.drawerLayout, binding.toolBar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        binding.drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
 
         binding.bottomNavigation.setOnItemSelectedListener(item -> {
 
             switch (item.getItemId()){
 
                 case R.id.map: chooseFragment(new MapFragment());
-
+                    binding.toolBar.setTitle("I'm Hungry !");
                     break;
                 case R.id.listView: chooseFragment(new ListViewFragment());
+                    binding.toolBar.setTitle("I'm Hungry !");
                     break;
                 case R.id.workmates: chooseFragment(new WorkmatesFragment());
+                    binding.toolBar.setTitle("Available Workmate");
                     break;
+
             }
 
             return true;
