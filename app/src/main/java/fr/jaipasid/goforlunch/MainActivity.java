@@ -1,6 +1,5 @@
 package fr.jaipasid.goforlunch;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -11,9 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+
 
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -26,7 +23,6 @@ import fr.jaipasid.goforlunch.databinding.ActivityMainBinding;
 import fr.jaipasid.goforlunch.fragment.ListViewFragment;
 import fr.jaipasid.goforlunch.fragment.MapFragment;
 import fr.jaipasid.goforlunch.fragment.WorkmatesFragment;
-import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
         chooseFragment(new MapFragment());
         binding.toolBar.setTitle("I'm Hungry !");
 
+
+        BuildConfig.MAPS_API_KEY
 
 
         mToolbar = findViewById(R.id.toolBar);
