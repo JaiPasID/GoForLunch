@@ -5,6 +5,7 @@ import android.Manifest;
 import android.content.Context;
 
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationRequest;
@@ -13,32 +14,38 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 
 
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.maps.GoogleMap;
 
 import com.google.android.gms.maps.OnMapReadyCallback;
 
 import fr.jaipasid.goforlunch.MainActivity;
 import fr.jaipasid.goforlunch.R;
+import fr.jaipasid.goforlunch.locationManager.LocationGps;
+import fr.jaipasid.goforlunch.utils.RetrofitPost;
 
 
-public class MapFragment extends Fragment implements OnMapReadyCallback {
+public class MapFragment extends Fragment implements OnMapReadyCallback{
 
 
-    protected LocationManager locationManager;
-    protected LocationRequest locationRequest;
-    Context context;
     double lat;
     double lon;
-
-    // FusedLocationProviderClient fusedLocationProviderClient;
+    private ActivityResultLauncher<String> requestPermissionLauncher;
+    LocationCallback locationCallback;
+    RetrofitPost retrofitPost;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,36 +54,53 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
 
 
-        locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        locationRequest = LocationRequest.create();
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return TODO;
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ) {
+            CallBack();
+        } else {
+            requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
         }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) this);
 
+        requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), new ActivityResultCallback<Boolean>() {
+            @Override
+            public void onActivityResult(Boolean isGranted) {
+                if (isGranted) {
+                    CallBack();
+                    retrofitPost.setLat(lat);
+                    retrofitPost.setLon(lon);
+                } else {
+                    //
+                }
+            }
+        });
 
-//TODO CREER UNE METHODE LOCATION MANAGER POUR RECUPERER LAT ET LONGITUDE
-
-        // Return view
    return view;
 
 
         }
 
 
+        public void CallBack(){
+            locationCallback = new LocationCallback() {
+                @Override
+                public void onLocationResult(@NonNull LocationResult locationResult) {
+                    super.onLocationResult(locationResult);
+                    Location location = locationResult.getLastLocation();
+                    lat = location.getLatitude();
+                    lon = location.getLongitude();
+                    retrofitPost.setLat(lat);
+                    retrofitPost.setLon(lon);
+
+                }
+            };
+
+        }
 
 
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
  // TODO UTILISER LES COORDONNES POUR WOO,ER SUR MA LOCAISTION
+
 
     }
 }
