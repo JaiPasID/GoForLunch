@@ -2,13 +2,9 @@ package fr.jaipasid.goforlunch.fragment;
 
 
 import android.Manifest;
-import android.content.Context;
 
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.location.LocationRequest;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,22 +16,18 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 
 
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 
-import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.maps.GoogleMap;
 
 import com.google.android.gms.maps.OnMapReadyCallback;
 
-import fr.jaipasid.goforlunch.MainActivity;
 import fr.jaipasid.goforlunch.R;
-import fr.jaipasid.goforlunch.locationManager.LocationGps;
-import fr.jaipasid.goforlunch.utils.RetrofitPost;
+import fr.jaipasid.goforlunch.utils.GoogleMapsApi;
 
 
 public class MapFragment extends Fragment implements OnMapReadyCallback{
@@ -44,8 +36,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     double lat;
     double lon;
     private ActivityResultLauncher<String> requestPermissionLauncher;
+    private GoogleMapsApi mGoogleMapsApi;
+
+
+
     LocationCallback locationCallback;
-    RetrofitPost retrofitPost;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,8 +61,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
             public void onActivityResult(Boolean isGranted) {
                 if (isGranted) {
                     CallBack();
-                    retrofitPost.setLat(lat);
-                    retrofitPost.setLon(lon);
+
                 } else {
                     //
                 }
@@ -87,9 +82,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
                     Location location = locationResult.getLastLocation();
                     lat = location.getLatitude();
                     lon = location.getLongitude();
-                    retrofitPost.setLat(lat);
-                    retrofitPost.setLon(lon);
-
+                    String mLocation = lat + "," + lon;
+                   // fetchData(mLocation);
                 }
             };
 
@@ -103,4 +97,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
 
 
     }
+
+
 }
