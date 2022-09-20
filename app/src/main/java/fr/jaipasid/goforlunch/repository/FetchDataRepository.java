@@ -18,7 +18,7 @@ public class FetchDataRepository {
     }
 
     public void fetchData(String location) {
-        Call<MyFetchData> call = mGoogleMapsApi.getRestaurant("keyword", location, 1000, "restaurant", BuildConfig.MAPS_API_KEY);
+        Call<MyFetchData> call = mGoogleMapsApi.getRestaurant("keyword", location, 1000, "restaurant", BuildConfig.ApiKey);
 
         call.enqueue(new Callback<MyFetchData>() {
             @Override
