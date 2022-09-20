@@ -2,7 +2,6 @@ package fr.jaipasid.goforlunch.fragment;
 
 
 import android.Manifest;
-
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -14,16 +13,12 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-
-
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-
 
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.maps.GoogleMap;
-
 import com.google.android.gms.maps.OnMapReadyCallback;
 
 import fr.jaipasid.goforlunch.R;
@@ -42,7 +37,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
 
     LocationCallback locationCallback;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -50,11 +44,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         View view = inflater.inflate(R.layout.fragment_map, container, false);
 
 
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ) {
-            CallBack();
-        } else {
-            requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
-        }
+
 
         requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), new ActivityResultCallback<Boolean>() {
             @Override
@@ -67,6 +57,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
                 }
             }
         });
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ) {
+            CallBack();
+        } else {
+            requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
+        }
 
    return view;
 
@@ -82,7 +77,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
                     Location location = locationResult.getLastLocation();
                     lat = location.getLatitude();
                     lon = location.getLongitude();
+
                     String mLocation = lat + "," + lon;
+                    //TODO  observer la methode getRestaurant du viewModel en lui passant la localisation
                    // fetchData(mLocation);
                 }
             };
@@ -93,7 +90,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
- // TODO UTILISER LES COORDONNES POUR WOO,ER SUR MA LOCAISTION
+ // TODO UTILISER LES COORDONNES POUR WOO,ER SUR MA LOCALISATION
 
 
     }
