@@ -1,11 +1,14 @@
 package fr.jaipasid.goforlunch.viewmodel;
 
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
+import fr.jaipasid.goforlunch.models.MyFetchData;
 import fr.jaipasid.goforlunch.repository.FetchDataRepository;
 
 public class FetchDataViewModel extends ViewModel{
+
 
     private FetchDataRepository fetchDataRepository;
 
@@ -17,10 +20,9 @@ public class FetchDataViewModel extends ViewModel{
     }
 
 
-    public void getRestaurants (String myLocation){
-//TODO LIVEDATA LIST RESULT
-    fetchDataRepository.fetchData(myLocation) ;
+    public LiveData<MyFetchData> getRestaurants (String localisation){
 
+        return fetchDataRepository.fetchData(localisation);
 
     }
 

@@ -15,14 +15,22 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 
+import java.util.List;
+
 import fr.jaipasid.goforlunch.R;
+import fr.jaipasid.goforlunch.models.MyFetchData;
+import fr.jaipasid.goforlunch.models.Result;
 import fr.jaipasid.goforlunch.utils.GoogleMapsApi;
+import fr.jaipasid.goforlunch.viewmodel.FetchDataViewModel;
+import fr.jaipasid.goforlunch.viewmodel.NewModelFactory;
 
 
 public class MapFragment extends Fragment implements OnMapReadyCallback{
@@ -32,6 +40,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     double lon;
     private ActivityResultLauncher<String> requestPermissionLauncher;
     private GoogleMapsApi mGoogleMapsApi;
+    private FetchDataViewModel mFetchDataViewModel;
+    private List<Result> retourApi;
+    private String mLocation;
 
 
 
@@ -42,6 +53,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
                              Bundle savedInstanceState) {
         // Initialize view
         View view = inflater.inflate(R.layout.fragment_map, container, false);
+        mFetchDataViewModel = new ViewModelProvider(this, NewModelFactory.getInstance()).get(FetchDataViewModel.class);
 
 
 
@@ -62,7 +74,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         } else {
             requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
         }
-
+ 
    return view;
 
 
@@ -78,9 +90,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
                     lat = location.getLatitude();
                     lon = location.getLongitude();
 
-                    String mLocation = lat + "," + lon;
-                    //TODO  observer la methode getRestaurant du viewModel en lui passant la localisation
-                   // fetchData(mLocation);
+                    mLocation = lat + "," + lon;
+
                 }
             };
 
@@ -90,7 +101,25 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
- // TODO UTILISER LES COORDONNES POUR WOO,ER SUR MA LOCALISATION
+
+        mFetchDataViewModel.getRestaurants(mLocation).observe(requireActivity(), new Observer<MyFetchData>() {
+            @Override
+            public void onChanged(MyFetchData pMyFetchData) {
+                retourApi = pMyFetchData.getResults();
+
+                // TODO FAIRE UNE BOUCLE SUR LES RESTAURANTS
+                for (int i = 0; i < retourApi.size(); i++){
+                    Double lat =  retourApi.get(i).getGeometry().getLocation().getLat();
+                    Double lon =  retourApi.get(i).getGeometry().getLocation().getLng();
+
+                    // TODO AJOUT UN MARKER A CHAQUE ITARATION DE LA BOUCLE
+                }
+
+            }
+        });
+
+
+
 
 
     }

@@ -1,7 +1,5 @@
 package fr.jaipasid.goforlunch.viewmodel;
 
-import android.content.Context;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
@@ -17,11 +15,11 @@ public class NewModelFactory implements ViewModelProvider.Factory{
      * Singleton
      * instantiate ViewModelFactory with things inside constructors
      */
-    public static NewModelFactory getInstance(Context context) {
+    public static NewModelFactory getInstance() {
 
         if (newModelFactory == null) {
             synchronized (NewModelFactory.class) {
-                newModelFactory = new NewModelFactory(context);
+                newModelFactory = new NewModelFactory();
             }
         }
         return newModelFactory;
@@ -31,7 +29,7 @@ public class NewModelFactory implements ViewModelProvider.Factory{
      * Constructor
      * Instantiate 1 repository
      */
-    private NewModelFactory(Context context) {
+    private NewModelFactory() {
        
         fetchDataRepository = new FetchDataRepository(Retrofit.getGoogleMapsApi());
        

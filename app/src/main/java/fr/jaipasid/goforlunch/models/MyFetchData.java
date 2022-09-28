@@ -25,6 +25,10 @@ public class MyFetchData {
         this.htmlAttributions = htmlAttributions;
     }
 
+    public MyFetchData(List<Result> pResults) {
+        results = pResults;
+    }
+
     public List<Result> getResults() {
         return results;
     }
